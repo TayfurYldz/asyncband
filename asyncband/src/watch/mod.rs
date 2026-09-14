@@ -81,8 +81,6 @@ use crate::internal::wakerset::WakerToken;
 /// Creates a watch channel with an initial value.
 ///
 /// The receiver returned by this function considers the initial value already observed.
-/// The value type does not need to implement `Clone` for construction, publication, or change
-/// notification. Only owning reads through [`Receiver::get`] and [`Receiver::recv`] require it.
 ///
 /// # Examples
 ///
