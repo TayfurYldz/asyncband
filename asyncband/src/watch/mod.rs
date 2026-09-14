@@ -81,6 +81,8 @@ use crate::internal::wakerset::WakerToken;
 /// Creates a watch channel with an initial value.
 ///
 /// The receiver returned by this function considers the initial value already observed.
+/// The value type does not need to implement `Clone` for construction, publication, or change
+/// notification. Only owning reads through [`Receiver::get`] and [`Receiver::recv`] require it.
 ///
 /// # Examples
 ///
@@ -90,7 +92,7 @@ use crate::internal::wakerset::WakerToken;
 /// let (_tx, rx) = watch::channel("ready");
 /// assert_eq!(rx.get(), "ready");
 /// ```
-pub fn channel<T: Clone>(initial: T) -> (Sender<T>, Receiver<T>) {
+pub fn channel<T>(initial: T) -> (Sender<T>, Receiver<T>) {
     let shared = Arc::new(Shared {
         state: Mutex::new(State {
             value: initial,
